@@ -1,8 +1,14 @@
-import React from 'react'
+import { useRef, useState } from 'react'
 import { SearchIcon } from 'lucide-react';
-
+import LargeWeatherCard from './LargeWeatherCard';
 const Header = () => {
-  return (
+    const [location , setLocation] = useState("");
+    const locationRef = useRef();
+    
+    const makeChanges =  () => {
+        setLocation(locationRef.current.value);
+    }
+    return ( 
     <div>
       <div className='relative  w-full h-full'>
             <div className='container max-7xl mx-auto '>
@@ -14,17 +20,32 @@ const Header = () => {
                             <label className='input w-full max-w-md sm:max-w-lg ring-1 ring-slate-500 focus:outline-slate-400 outline-1 rounded-xl'>
                                 <SearchIcon className='size-5 opacity-65'/>
                                 <input type="text" placeholder='Search for particular place'
+                                ref={locationRef}
                                 className='input input-sm px-4 focus:outline-none'
                                 />
                             </label>
                         
-                        <button className='btn p-5 ring-1 ring-slate-100 rounded-xl bg-primary'>
+                        <button onClick={makeChanges} className='btn p-5 ring-1 ring-slate-100 rounded-xl bg-primary'>
                             Search
                         </button>
                     </div>
                 </div>
             </div>
         </div>
+
+
+        <div className='relative w-full h-full'>
+          <div className='max-w-7xl mx-auto'>
+            <div className='flex flex-col justify-center p-5'>
+              <div className='flex flex-row w-[70%] '>
+                <LargeWeatherCard location = {location} setLocation = {setLocation}/>
+              </div>
+            </div>
+          </div>
+
+
+        </div>
+
     </div>
   )
 }
